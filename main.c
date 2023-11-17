@@ -36,6 +36,29 @@ void save_as_ppm(FILE *out_file, char_image_t i) {
   }
 }
 
+typedef union {
+  struct {
+    float x, y, z;
+  };
+  float e[3];
+} v3;
+
+v3 v3_add(v3 a, v3 b) {
+  return (v3) { a.x + b.x, a.y + b.y, a.z + b.z };
+}
+
+v3 v3_muls(v3 a, float t) {
+  return (v3) { a.x * t, a.y * t, a.z * t };
+}
+
+typedef struct {
+  v3 o, d;
+} ray_t;
+
+v3 ray_at(ray_t r, float t) {
+  return v3_add(r.o, v3_muls(r.d, t));
+}
+
 int main(int argc, const char **argv) {
   const char *outfile_path = "out.ppm";
 
