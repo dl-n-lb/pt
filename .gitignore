@@ -1,2 +1,4 @@
 main
 *.ppm
+build
+*.o
