@@ -1,3 +1,6 @@
+#ifndef VEC_H_
+#define VEC_H_
+
 #include "types.h"
 
 // print formatting
@@ -27,3 +30,7 @@ f32 v3_dot(v3 a, v3 b);
 f32 v3_lensq(v3 a);
 f32 v3_len(v3 a);
 v3 v3_norm(v3 a);
+
+v3 rand_unit_v3(void);
+
+#endif // VEC_H_

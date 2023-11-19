@@ -21,4 +21,9 @@ Pinhole cameras are the most simple, so that's all we need for now
 
 ## Intersection Functions
 ### Sphere
+Just a quadratic equation (TODO: diagram/working)
+### Triangle
 TODO
+
+## Random vector
+TODO: learn how this works lol

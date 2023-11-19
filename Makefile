@@ -1,13 +1,23 @@
-OPTS=-fsanitize=address -O0
+OPTS=-fsanitize=address -O0 -Wall -Wextra
 
-vec.o: vec.c
-	$(CC) -c -o vec.o vec.c $(OPTS)
+build/vec.o: vec.c
+	$(CC) -c -o build/vec.o vec.c $(OPTS)
 
-image.o: image.c
-	$(CC) -c -o image.o image.c $(OPTS)
+build/image.o: image.c
+	$(CC) -c -o build/image.o image.c $(OPTS)
 
-main: main.c image.o vec.o
-	$(CC) -o main main.c image.o vec.o -lm $(OPTS)
+build/ray.o: ray.c
+	$(CC) -c -o build/ray.o ray.c $(OPTS)
+
+build/cam.o: cam.c
+	$(CC) -c -o build/cam.o cam.c $(OPTS)
+
+main: main.c build/image.o build/vec.o build/ray.o build/cam.o
+	$(CC) -o main main.c build/image.o build/vec.o build/ray.o build/cam.o -lm $(OPTS)
+
+clean:
+	rm build/*.o
+	rm main
 
 .PHONY: main
 

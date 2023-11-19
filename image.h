@@ -1,3 +1,6 @@
+#ifndef IMAGE_H_
+#define IMAGE_H_
+
 #include "types.h"
 
 // forced 3 channels because PPM doesnt support Alpha
@@ -25,3 +28,5 @@ void float3_image_free(float3_image_t img);
 
 // creates a char image which must be freed using char_image_free
 char_image_t float3_to_char_image(float3_image_t img);
+
+#endif // IMAGE_H_
