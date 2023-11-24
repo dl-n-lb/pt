@@ -38,8 +38,16 @@ Using Monte Carlo + the rendering equation as:
 https://en.wikipedia.org/wiki/Rendering_equation
 
 ## Triangle intersection
+https://www.scratchapixel.com/lessons/3d-basic-rendering/ray-tracing-rendering-a-triangle/moller-trumbore-ray-triangle-intersection.html
 
 ## Light sources
+Simple to implement - just set some materials as emissive and when they get hit break early with the color of the light
+
+## disney BSDF ?
+
+## direct light sampling - PDF!
+
+## AA + focus blur
 
 ## BVH
 

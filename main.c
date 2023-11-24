@@ -11,10 +11,14 @@
 #include "ray.h"
 #include "cam.h"
 
-#define SKY_COLOR (v3) {{0.65, 0.85, 0.9}}
+#define SKY_COLOR (v3) {0}
 
 typedef struct {
-  v3 color;
+  bool is_light;
+  union {
+    v3 color;
+    v3 emission;
+  };
 } mat_t;
 
 // NOTE: align this?
@@ -83,8 +87,10 @@ v3 ray_color_it(ray_t r, const scene_t sc, int depth) {
   for (int x = 0; x < depth; ++x) {
     i = intersect_scene(r, sc);
     if (!i.exists) {
-      acc = v3_mul(acc, SKY_COLOR);
-      return acc;
+      return v3_mul(acc, SKY_COLOR);
+    }
+    if (i.mat.is_light) {
+      return v3_mul(acc, i.mat.emission);
     }
     v3 nd;
     do {
@@ -104,6 +110,9 @@ v3 ray_color(ray_t r, const scene_t sc, int depth) {
   if (!i.exists) {
     return SKY_COLOR;
   }
+  if (i.mat.is_light) {
+    return i.mat.emission;
+  }
   v3 new_d;
   // force the new direction to be in the same hemisphere as the normal
   // to satisfy that this integral is over the hemisphere
@@ -117,9 +126,9 @@ v3 ray_color(ray_t r, const scene_t sc, int depth) {
   return v3_mul(i.mat.color, ray_color(r_new, sc, depth-1));
 }
 
-#define WIDTH 2500
-#define HEIGHT 2500
-#define SPP 100
+#define WIDTH 640
+#define HEIGHT 360
+#define SPP 250
 
 int main(int argc, const char **argv) {
   (void)argc;
@@ -134,30 +143,38 @@ int main(int argc, const char **argv) {
       .lookat = (v3) {{0}},
       .lens_len = 1.f,
       .aperture = 1.f,
-      .aspect = 1.f,
+      .aspect = (float)WIDTH/HEIGHT,
     });
 
   sphere_t sph = {
-    .c = (v3) {{ 0, 0, 2 }},
-    .r = 0.8f,
-    .mat.color = (v3) {{0.9, 0.8, 0.9}}
+    .c = (v3) {{ 3, 1.2, 1.3 }},
+    .r = 1.f,
+    .mat.is_light = true,
+    .mat.emission = (v3) {{2.2, 2.5, 3.5}}
   };
   sphere_t sph2 = {
     .c = (v3) {{ 0, -10 - 0.8, 2 }},
     .r = 10.f,
     .mat.color = (v3) {{0.9, 0.9, 0.8}}
   };
-  // TODO: TEMP
-  sphere_t spheres[2] = {sph, sph2};
-  scene_t sc = {spheres, 2};
+  sphere_t sph3 = {
+    .c = (v3) {{ 0, 0, 2 }},
+    .r = 0.8f,
+    .mat.color = (v3) {{0.8, 0.4, 0.1}}
+  };
 
-  //#pragma omp parallel for
+  // TODO: TEMP
+  sphere_t spheres[3] = {sph, sph2, sph3};
+  scene_t sc = {spheres, 3};
+
+  // TODO: WHY IS THIS SO SLOW
+  //#pragma omp parallel for shared(render, sc, cam)
   for (size_t i = 0; i < HEIGHT; ++i) {
     for (size_t j = 0; j < WIDTH; ++j) {
       v3 col = {0};
       ray_t r = cam_ray(cam, (float)j/WIDTH, (float)i/HEIGHT);
       for (size_t s = 0; s < SPP; ++s) {
-	col = v3_add(col, ray_color_it(r, sc, 10));
+	col = v3_add(col, ray_color(r, sc, 10));
       }
       col = v3_divs(col, SPP);
 
