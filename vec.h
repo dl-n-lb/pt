@@ -20,6 +20,7 @@ typedef union {
 // TODO: TEST THESE FUNCTIONS LOL
 v3 v3_add(v3 a, v3 b);
 v3 v3_sub(v3 a, v3 b);
+v3 v3_mul(v3 a, v3 b);
 
 v3 v3_muls(v3 a, f32 t);
 v3 v3_divs(v3 a, f32 t);

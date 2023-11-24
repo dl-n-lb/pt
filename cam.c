@@ -7,7 +7,7 @@ cam_t cam_create(cam_create_info_t cci) {
   // generate an onb
   v3 w = v3_norm(v3_sub(cci.lookat, cci.lookfrom)); // forward vector
   res.u = v3_cross(cci.up, w); // right
-  res.v = v3_cross(w, res.u); // up
+  res.v = v3_cross(res.u, w); // up
   res.u = v3_muls(res.u, cci.aspect); // right scaled for aspect ratio
 
   // temps

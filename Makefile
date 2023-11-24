@@ -1,4 +1,4 @@
-OPTS=-fsanitize=address -O0 -Wall -Wextra
+OPTS=-fsanitize=address -O3 -Wall -Wextra -fopenmp -march=native
 
 build/vec.o: vec.c
 	$(CC) -c -o build/vec.o vec.c $(OPTS)

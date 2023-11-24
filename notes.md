@@ -27,3 +27,20 @@ TODO
 
 ## Random vector
 TODO: learn how this works lol
+These might work, but I think too expensive?
+https://stackoverflow.com/questions/6283080/random-unit-vector-in-multi-dimensional-space
+https://en.wikipedia.org/wiki/Normal_distribution#Computational_methods
+This one works:
+https://math.stackexchange.com/questions/44689/how-to-find-a-random-axis-or-unit-vector-in-3d
+
+## Shading
+Using Monte Carlo + the rendering equation as:
+https://en.wikipedia.org/wiki/Rendering_equation
+
+## Triangle intersection
+
+## Light sources
+
+## BVH
+
+## Wavefront methods?

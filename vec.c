@@ -11,6 +11,10 @@ v3 v3_sub(v3 a, v3 b) {
   return (v3) {{ a.x - b.x, a.y - b.y, a.z - b.z }};
 }
 
+v3 v3_mul(v3 a, v3 b) {
+  return (v3) {{ a.x * b.x, a.y * b.y, a.z * b.z }};
+}
+
 v3 v3_muls(v3 a, f32 t) {
   return (v3) {{ a.x * t, a.y * t, a.z * t }};
 }
@@ -43,17 +47,24 @@ v3 v3_norm(v3 a) {
   return v3_divs(a, v3_len(a));
 }
 
-v3 rand_unit_v3(void) {
-  // simplest (wrong) method is uniform sample + normalize
-  // simplest (maybe correct method) is to pick angles then work out the vector
-  // google told me to use a gaussian distribution then normalize
-  // this is just ripped off of raytracing.github.io because im lazy
-  v3 res = {0};
-  f32 theta = (f32)rand() / RAND_MAX * 2 * M_PI;
-  f32 rho = (f32)rand() / RAND_MAX * 2 * M_PI;
-  res.x = cosf(theta) * 2 * sqrt(rho * (1-rho));
-  res.y = sinf(theta) * 2 * sqrt(rho * (1-rho));
-  res.z = 1 - 2 * rho;
+// (should be) a uniformly randomly distributed vector
+// forgot that X, Y werent necessarily normalised (oops)
+/*v3 rand_unit_v3(void) {
+  float U = (float)random() / RAND_MAX;
+  float V = (float)random() / RAND_MAX;
 
-  return res;
+  float X = sqrtf(-2 * logf(U)) * cosf(2 * M_PI * V);
+  float Y = sqrtf(-2 * logf(U)) * sinf(2 * M_PI * V);
+  float Z = 1 - X*X - Y*Y;
+  return (v3) {{X, Y, Z}};
+  }*/
+
+v3 rand_unit_v3(void) {
+  float theta = (float)random() / RAND_MAX * 2 * M_PI;
+  float z = ((float)random() / RAND_MAX) * 2 - 1;
+  return (v3) {{
+    sqrtf(1 - z*z) * cos(theta),
+    sqrtf(1 - z*z) * sin(theta),
+    z
+    }};
 }
