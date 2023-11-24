@@ -5,6 +5,9 @@
 #include "vec.h"
 #include "ray.h"
 
+// TODO: RESEARCH A PROPER LENS SOLUTION TO THE CAMERA
+// PINHOLE CAMERAS ARE BORING
+
 typedef struct {
   v3 up, lookfrom, lookat;
   f32 lens_len;
@@ -16,7 +19,8 @@ typedef struct {
   v3 pos;
   v3 llc; // bottom left of image
   v3 u, v;
-  f32 aperture; // unused
+  f32 aperture;
+  f32 focus_dist;
 } cam_t;
 
 cam_t cam_create(cam_create_info_t cci);

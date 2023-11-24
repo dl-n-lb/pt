@@ -43,11 +43,13 @@ https://www.scratchapixel.com/lessons/3d-basic-rendering/ray-tracing-rendering-a
 ## Light sources
 Simple to implement - just set some materials as emissive and when they get hit break early with the color of the light
 
+## AA + focus blur
+AA is achieved by jittering the target pixels of rays 
+focus blur is achieved by calculating a focus plane, jittering ray origins and fixing the point on the focus plane through which they pass. (this is not a physically accurate method).
+
 ## disney BSDF ?
 
 ## direct light sampling - PDF!
-
-## AA + focus blur
 
 ## BVH
 
