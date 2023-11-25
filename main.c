@@ -11,7 +11,7 @@
 #include "ray.h"
 #include "cam.h"
 
-#define SKY_COLOR (v3) {{0.1, 0.2, 0.4}}
+#define SKY_COLOR (v3) {{0.03, 0.08, 0.14}}
 
 typedef struct {
   bool is_light;
@@ -175,9 +175,9 @@ v3 ray_color(ray_t r, const scene_t sc, int depth) {
   return v3_mul(i.mat.color, ray_color(r_new, sc, depth-1));
 }
 
-#define WIDTH 1280
-#define HEIGHT 720
-#define SPP 500
+#define WIDTH 640
+#define HEIGHT 360
+#define SPP 250
 
 int main(int argc, const char **argv) {
   (void)argc;
@@ -188,10 +188,11 @@ int main(int argc, const char **argv) {
 
   cam_t cam = cam_create((cam_create_info_t) {
       .up = (v3) {{0, 1, 0}},
+      .vfov = 45,
       .lookfrom = (v3) {{0, 0, -1}},
       .lookat = (v3) {{0, 0, 2}},
-      .lens_len = 1.f,
-      .aperture = 0.15f,
+      .focus_dist = 3.f,
+      .aperture = 0.f,
       .aspect = (float)WIDTH/HEIGHT,
     });
 

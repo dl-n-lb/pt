@@ -10,7 +10,8 @@
 
 typedef struct {
   v3 up, lookfrom, lookat;
-  f32 lens_len;
+  f32 focus_dist;
+  f32 vfov;
   f32 aperture; // unused for now
   f32 aspect;
 } cam_create_info_t;

@@ -47,6 +47,10 @@ Simple to implement - just set some materials as emissive and when they get hit 
 AA is achieved by jittering the target pixels of rays 
 focus blur is achieved by calculating a focus plane, jittering ray origins and fixing the point on the focus plane through which they pass. (this is not a physically accurate method).
 
+FIX: (as in rtiow)
+Model as a thin lens + focus plane:
+lens approximated by taking random samples in disk (lens shape)
+focus plane replaces previous image plane
 ## disney BSDF ?
 
 ## direct light sampling - PDF!
